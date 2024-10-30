@@ -107,7 +107,7 @@ export default function Home() {
 
       {/* 聊天内容区域 - 添加固定高度和滚动条样式 */}
       <div className="flex-1 overflow-auto">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           {messages.length === 0 ? (
             // 欢迎消息
             <div className="p-8 text-center">
@@ -171,7 +171,7 @@ export default function Home() {
 
       {/* 底部输入区域 */}
       <div className="border-t border-gray-700 p-4 bg-[#343541]">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative flex items-center">
             <textarea
               ref={inputRef}
