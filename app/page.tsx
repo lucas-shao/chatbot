@@ -248,22 +248,3 @@ export default function Home() {
     </div>
   )
 }
-
-const suggestions = [
-  {
-    emoji: "💡",
-    text: "回答你的各种小问题"
-  },
-  {
-    emoji: "✍️",
-    text: "帮你写作和润色文章"
-  },
-  {
-    emoji: "🎨",
-    text: "激发创意和灵感"
-  },
-  {
-    emoji: "🤗",
-    text: "陪你聊天解闷"
-  }
-]

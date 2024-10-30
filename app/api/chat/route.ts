@@ -13,13 +13,32 @@ export async function POST(request: Request) {
     try {
         const { messages } = await request.json();
 
-        const response = await client.chat.completions.create({
+        const completion = await client.chat.completions.create({
             model: "deepseek-chat",
-            messages: messages
+            messages: messages,
+            temperature: 0.7,
+            max_tokens: 2000
         });
 
-        return new Response(JSON.stringify(response.choices[0].message));
-    } catch (error) {
-        return new Response(JSON.stringify({ error: 'Failed to fetch from DeepSeek API' }), { status: 500 });
+        return new Response(JSON.stringify(completion.choices[0].message), {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+    } catch (err) {
+        console.error('DeepSeek API Error:', err);
+
+        return new Response(
+            JSON.stringify({
+                error: 'Failed to fetch from DeepSeek API',
+                details: err instanceof Error ? err.message : 'Unknown error'
+            }),
+            {
+                status: 500,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
     }
 } 
