@@ -8,6 +8,7 @@ marked.setOptions({
   gfm: true      // 启用 GitHub 风格的 Markdown
 });
 
+// 明确定义 Message 类型
 interface Message {
   role: 'user' | 'assistant'
   content: string
@@ -41,7 +42,8 @@ export default function Home() {
 
     try {
       setIsLoading(true)
-      const newMessages = [...messages, { role: 'user', content: input.trim() }]
+      // 确保新消息符合 Message 类型
+      const newMessages: Message[] = [...messages, { role: 'user' as const, content: input.trim() }]
       setMessages(newMessages)
       setInput('')
 
@@ -62,17 +64,17 @@ export default function Home() {
         throw new Error('API request failed')
       }
 
-      const aiMessage = await response.json()
-      setMessages([...newMessages, aiMessage])
+      const aiMessage: Message = await response.json()
+      // 确保 AI 响应也符合 Message 类型
+      setMessages([...newMessages, { ...aiMessage, role: 'assistant' as const }])
     } catch (error) {
       console.error('Failed to send message:', error)
       setMessages(prev => [...prev, {
-        role: 'assistant',
+        role: 'assistant' as const,
         content: '抱歉，我遇到了一些问题。请稍后再试。'
       }])
     } finally {
       setIsLoading(false)
-      // 再次确保输入框保持焦点
       requestAnimationFrame(() => {
         inputRef.current?.focus()
       })
